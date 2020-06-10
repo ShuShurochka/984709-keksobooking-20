@@ -39,7 +39,6 @@ var PLACE_PHOTOS = [
 ];
 
 var NUMBER_OF_ROOMS = [
-  0,
   1,
   2,
   3,
@@ -56,18 +55,32 @@ var NUMBER_OF_GUESTS = [
   10,
 ];
 
-var description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sit amet laoreet diam. Fusce in nunc pulvinar,' +
- 'commodo ex quis, eleifend augue. Donec dictum ut eros nec bibendum. ' +
- 'Donec quis erat semper elit imperdiet accumsan. Nunc ut suscipit metus. Donec sit amet velit sit amet dui laoreet laoreet. ' +
- 'Curabitur eu fringilla nunc. Aenean blandit porta velit, eu mattis quam consequat ac. Fusce iaculis, justo id lobortis venenatis,' +
- 'sapien leo maximus diam, sed imperdiet erat sem nec nulla.';
+var DESCRIPTIONS = [
+  'моя хата с краю',
+  'век живи, век лечись',
+  'квартирка огонек',
+  'султаны и падишахи онли',
+  'окна в пол, красивые диваны, как глаза твоей дамы',
+  'котов не предлагать',
+  'крыша дырявая',
+  'аутентичная кладовка'
+];
+
+var TITLES = [
+  'Хата',
+  'палата',
+  'пожврное депо',
+  'дворец с какаду',
+  'Салон',
+  'Конура',
+  'Дуршлак инкорпорейтед',
+  'Место Гарри Поттера'
+];
 
 
 var getRandomArrayElement = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
-
-var price = Math.floor(Math.random() * MAX_PRICE_VALUE);
 
 
 function randomInteger(min, max) {
@@ -80,13 +93,14 @@ var generateAnnouncements = function (quantity) {
   for (var i = 0; i < quantity; i++) {
     var locationX = randomInteger(0, 1200);
     var locationY = randomInteger(130, 630);
+    var price = Math.floor(Math.random() * MAX_PRICE_VALUE);
     announcements[i] = {
 
       author: {
         avatar: 'img/avatars/user0' + (i + 1) + '.png'
       },
       offer: {
-        title: 'Lorem Ipsum',
+        title: TITLES[i],
         address: locationX + ',' + locationY,
         price: price,
         type: getRandomArrayElement(TYPES_PLACES),
@@ -95,7 +109,7 @@ var generateAnnouncements = function (quantity) {
         checkin: getRandomArrayElement(CHECK_IN_TIMES),
         checkout: getRandomArrayElement(CHECK_OUT_TIMES),
         features: POSIBLE_FEATURES,
-        description: description,
+        description: DESCRIPTIONS[i],
         photos: PLACE_PHOTOS,
       },
       location: {
