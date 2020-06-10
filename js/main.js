@@ -38,23 +38,6 @@ var PLACE_PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
 ];
 
-var NUMBER_OF_ROOMS = [
-  1,
-  2,
-  3,
-  4,
-  5,
-];
-
-var NUMBER_OF_GUESTS = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  10,
-];
-
 var DESCRIPTIONS = [
   'моя хата с краю',
   'век живи, век лечись',
@@ -88,12 +71,11 @@ function randomInteger(min, max) {
   return Math.floor(rand);
 }
 
-var announcements = [];
 var generateAnnouncements = function (quantity) {
+  var announcements = [];
   for (var i = 0; i < quantity; i++) {
     var locationX = randomInteger(0, 1200);
     var locationY = randomInteger(130, 630);
-    var price = Math.floor(Math.random() * MAX_PRICE_VALUE);
     announcements[i] = {
 
       author: {
@@ -102,15 +84,15 @@ var generateAnnouncements = function (quantity) {
       offer: {
         title: TITLES[i],
         address: locationX + ',' + locationY,
-        price: price,
+        price: randomInteger(0, MAX_PRICE_VALUE),
         type: getRandomArrayElement(TYPES_PLACES),
-        rooms: getRandomArrayElement(NUMBER_OF_ROOMS),
-        guests: getRandomArrayElement(NUMBER_OF_GUESTS),
+        rooms: randomInteger(1, 5),
+        guests: randomInteger(1, 10),
         checkin: getRandomArrayElement(CHECK_IN_TIMES),
         checkout: getRandomArrayElement(CHECK_OUT_TIMES),
-        features: POSIBLE_FEATURES,
+        features: POSIBLE_FEATURES.slice(0, randomInteger(1, POSIBLE_FEATURES.length)),
         description: DESCRIPTIONS[i],
-        photos: PLACE_PHOTOS,
+        photos: PLACE_PHOTOS.slice(0, randomInteger(1, PLACE_PHOTOS.length)),
       },
       location: {
         x: locationX,
@@ -121,7 +103,7 @@ var generateAnnouncements = function (quantity) {
   return announcements;
 };
 
-generateAnnouncements(QUANTITY_OF_ANNOUNCEMENTS);
+var announcements = generateAnnouncements(QUANTITY_OF_ANNOUNCEMENTS);
 
 var mapWindow = document.querySelector('.map');
 mapWindow.classList.remove('map--faded');
@@ -140,8 +122,8 @@ var renderAnnouncementsPin = function (announcement) {
   return fragment;
 };
 
-for (var j = 0; j < announcements.length; j++) {
-  renderAnnouncementsPin(announcements[j]);
+for (var i = 0; i < announcements.length; i++) {
+  renderAnnouncementsPin(announcements[i]);
 }
 
 var mapPins = document.querySelector('.map__pins');
