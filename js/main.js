@@ -133,16 +133,16 @@ disableFields(housingFeatures, true);
 var activateWindow = function () {
   mapWindow.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
-  disableFields(false);
   disableFields(selectsFilters, false);
   disableFields(housingFeatures, false);
   disableFields(adFormInputs, false);
-  getObjAdress(mainPinLeftPx, mainPinTopPx);
+  getObjAddress();
   checkGuestsNum();
 };
 
 mainPin.addEventListener('mousedown', function (evt) {
-  if (evt.button === 0) {
+  var mainMouseButton = 0;
+  if (evt.button === mainMouseButton) {
     activateWindow();
   }
 });
@@ -154,21 +154,23 @@ mainPin.addEventListener('keydown', function (evt) {
   }
 });
 // // Заполнение поля адреса
-var mainPinLeftPx = mainPin.style.left;
-var mainPinTopPx = mainPin.style.top;
-var getObjAdress = function (leftPx, topPx) {
+var getObjAddress = function () {
+  var mainPinLeftPx = parseInt(mainPin.style.left, 10);
+  var mainPinTopPx = parseInt(mainPin.style.top, 10);
   var objectAdress;
+  var centerOfMainPinX = mainPinLeftPx + MAIN_PIN_CIRCLE / 2;
+  var centerOfMainPinY = mainPinTopPx + MAIN_PIN_CIRCLE / 2;
   if (adForm.classList.contains('ad-form--disabled')) {
-    objectAdress = parseInt(leftPx, 10) + MAIN_PIN_CIRCLE / 2 + ', '
-    + (parseInt(topPx, 10) + MAIN_PIN_CIRCLE / 2);
+    objectAdress = centerOfMainPinX + ', ' + centerOfMainPinY
+    + mainPinTopPx + MAIN_PIN_CIRCLE / 2;
   } else {
-    objectAdress = parseInt(leftPx, 10) + MAIN_PIN_CIRCLE / 2 + ', ' +
-    (parseInt(topPx, 10) + MAIN_PIN_CIRCLE / 2 + MAIN_PIN_STICK);
+    objectAdress = centerOfMainPinX + ', ' + centerOfMainPinY
+    + MAIN_PIN_STICK;
   }
 
   adForm.querySelector('input[name="address"]').value = objectAdress;
 };
-getObjAdress(mainPinLeftPx, mainPinTopPx);
+getObjAddress();
 
 // код пинов
 var pinTemplate = document.querySelector('#pin').content.querySelector('button');
@@ -199,8 +201,8 @@ var rooms = document.querySelector('#room_number');
 
 
 var checkGuestsNum = function () {
-  var selectedRoom = document.getElementById('room_number').value;
-  var selectedGuestsNum = document.getElementById('capacity').value;
+  var selectedRoom = rooms.value;
+  var selectedGuestsNum = guests.value;
   if (selectedGuestsNum !== '0' && selectedRoom === '100') {
     guests.setCustomValidity('100 комнат не для гостей');
   } else if (selectedGuestsNum > selectedRoom) {
