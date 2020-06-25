@@ -11,6 +11,7 @@
     'house',
     'bungalo'
   ];
+
   var CHECK_IN_TIMES = [
     '12:00',
     '13:00',
@@ -62,21 +63,11 @@
   ];
 
 
-  var getRandomArrayElement = function (array) {
-    return array[Math.floor(Math.random() * array.length)];
-  };
-
-
-  function randomInteger(min, max) {
-    var rand = min + Math.random() * (max + 1 - min);
-    return Math.floor(rand);
-  }
-
   var generateAnnouncements = function (quantity) {
     var announcements = [];
     for (var i = 0; i < quantity; i++) {
-      var locationX = randomInteger(0, 1200);
-      var locationY = randomInteger(130, 630);
+      var locationX = window.utils.getRandomInteger(0, 1200);
+      var locationY = window.utils.getRandomInteger(130, 630);
       announcements[i] = {
 
         author: {
@@ -85,15 +76,15 @@
         offer: {
           title: TITLES[i],
           address: locationX + ',' + locationY,
-          price: randomInteger(0, MAX_PRICE_VALUE),
-          type: getRandomArrayElement(TYPES_PLACES),
-          rooms: randomInteger(1, 5),
-          guests: randomInteger(1, 10),
-          checkin: getRandomArrayElement(CHECK_IN_TIMES),
-          checkout: getRandomArrayElement(CHECK_OUT_TIMES),
-          features: POSIBLE_FEATURES.slice(0, randomInteger(1, POSIBLE_FEATURES.length)),
+          price: window.utils.getRandomInteger(0, MAX_PRICE_VALUE),
+          type: window.utils.getRandomArrayElement(TYPES_PLACES),
+          rooms: window.utils.getRandomInteger(1, 5),
+          guests: window.utils.getRandomInteger(1, 10),
+          checkin: window.utils.getRandomArrayElement(CHECK_IN_TIMES),
+          checkout: window.utils.getRandomArrayElement(CHECK_OUT_TIMES),
+          features: POSIBLE_FEATURES.slice(0, window.utils.getRandomInteger(1, POSIBLE_FEATURES.length)),
           description: DESCRIPTIONS[i],
-          photos: PLACE_PHOTOS.slice(0, randomInteger(1, PLACE_PHOTOS.length)),
+          photos: PLACE_PHOTOS.slice(0, window.utils.getRandomInteger(1, PLACE_PHOTOS.length)),
         },
         location: {
           x: locationX,
@@ -103,6 +94,8 @@
     }
     return announcements;
   };
-  window.announcements = generateAnnouncements(QUANTITY_OF_ANNOUNCEMENTS);
+  window.data = {
+    announcements: generateAnnouncements(QUANTITY_OF_ANNOUNCEMENTS)
+  };
 })();
 
