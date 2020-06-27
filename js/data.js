@@ -68,8 +68,8 @@
     for (var i = 0; i < quantity; i++) {
       var locationX = window.utils.getRandomInteger(0, 1200);
       var locationY = window.utils.getRandomInteger(130, 630);
-      announcements[i] = {
 
+      announcements[i] = {
         author: {
           avatar: 'img/avatars/user0' + (i + 1) + '.png'
         },
