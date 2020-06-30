@@ -11,6 +11,7 @@
 
   var activateWindow = function () {
     window.domElements.mapWindow.classList.remove('map--faded');
+    window.backend.load(window.map.successHandler, window.map.errorHandler);
     window.domElements.adForm.classList.remove('ad-form--disabled');
     window.utils.disableFields(window.domElements.selectsFilters, false);
     window.utils.disableFields(window.domElements.housingFeatures, false);
