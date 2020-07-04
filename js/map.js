@@ -2,16 +2,42 @@
 // добавляет на страницу нужную карточку, отрисовывает метки и осуществляет взаимодействие карточки и метки на карте;
 'use strict';
 (function () {
-  window.map = {
-    successHandler: function (announcements) {
-      var pinFragment = document.createDocumentFragment();
-      for (var i = 0; i < announcements.length; i++) {
-        var announcement = window.pin.renderAnnouncementsPin(announcements[i]);
-        pinFragment.appendChild(announcement);
-      }
+  var PINS_MAX_QUANTITY = 5;
+  var announcements = [];
+  var mapPins = document.querySelector('.map__pins');
 
-      var mapPins = document.querySelector('.map__pins');
-      mapPins.appendChild(pinFragment);
+  var renderPins = function (data) {
+    var takeNumber = data.length > PINS_MAX_QUANTITY ? PINS_MAX_QUANTITY : data.length;
+    var oldPins = document.querySelectorAll('[type=button]');
+    for (var j = 0; j < oldPins.length; j++) {
+      mapPins.removeChild(oldPins[j]);
+    }
+
+    for (var i = 0; i < takeNumber; i++) {
+      mapPins.appendChild(window.pin.renderAnnouncementsPin(data[i]));
+    }
+    window.utils.disableFields(window.domElements.selectsFilters, false);
+    window.utils.disableFields(window.domElements.housingFeatures, false);
+  };
+
+  var filterHousingType = document.querySelector('#housing-type');
+  filterHousingType.addEventListener('change', function () {
+    updateAnnouncements();
+
+  });
+
+  var updateAnnouncements = function () {
+    var selectedOption = filterHousingType.value;
+    var housingType = announcements.filter(function (it) {
+      return it.offer.type === selectedOption;
+    });
+    renderPins(housingType);
+  };
+
+  window.map = {
+    successHandler: function (data) {
+      announcements = data;
+      renderPins(announcements);
     },
 
     errorHandler: function (errorMessage) {
@@ -25,5 +51,4 @@
       document.body.insertAdjacentElement('afterbegin', node);
     },
   };
-
 })();
