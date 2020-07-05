@@ -8,12 +8,14 @@
 
   var renderPins = function (data) {
     var takeNumber = data.length > PINS_MAX_QUANTITY ? PINS_MAX_QUANTITY : data.length;
-    var oldPins = document.querySelectorAll('[type=button]');
-    for (var j = 0; j < oldPins.length; j++) {
-      mapPins.removeChild(oldPins[j]);
+    var oldPins = document.querySelectorAll('.map__pin');
+    for (var i = 0; i < oldPins.length; i++) {
+      if (oldPins[i].classList.contains('map__pin--main') === false) {
+        mapPins.removeChild(oldPins[i]);
+      }
     }
 
-    for (var i = 0; i < takeNumber; i++) {
+    for (i = 0; i < takeNumber; i++) {
       mapPins.appendChild(window.pin.renderAnnouncementsPin(data[i]));
     }
     window.utils.disableFields(window.domElements.selectsFilters, false);
@@ -28,10 +30,14 @@
 
   var updateAnnouncements = function () {
     var selectedOption = filterHousingType.value;
-    var housingType = announcements.filter(function (it) {
-      return it.offer.type === selectedOption;
-    });
-    renderPins(housingType);
+    if (selectedOption === 'any') {
+      renderPins(announcements);
+    } else {
+      var housingType = announcements.filter(function (it) {
+        return it.offer.type === selectedOption;
+      });
+      renderPins(housingType);
+    }
   };
 
   window.map = {
