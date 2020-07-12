@@ -33,7 +33,6 @@
     'washer',
     'elevator',
     'conditioner',
-    'description',
   ];
 
   var PLACE_PHOTOS = [
