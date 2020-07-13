@@ -8,11 +8,9 @@
 
   var renderPins = function (data) {
     var takeNumber = data.length > PINS_MAX_QUANTITY ? PINS_MAX_QUANTITY : data.length;
-    var oldPins = document.querySelectorAll('.map__pin');
+    var oldPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     for (var i = 0; i < oldPins.length; i++) {
-      if (oldPins[i].classList.contains('map__pin--main') === false) {
-        mapPins.removeChild(oldPins[i]);
-      }
+      mapPins.removeChild(oldPins[i]);
     }
 
     for (i = 0; i < takeNumber; i++) {

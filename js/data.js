@@ -13,12 +13,14 @@
   ];
 
   var CHECK_IN_TIMES = [
+    null,
     '12:00',
     '13:00',
     '14:00',
   ];
 
   var CHECK_OUT_TIMES = [
+    null,
     '12:00',
     '13:00',
     '14:00',
@@ -31,7 +33,6 @@
     'washer',
     'elevator',
     'conditioner',
-    'description',
   ];
 
   var PLACE_PHOTOS = [
@@ -41,7 +42,8 @@
   ];
 
   var DESCRIPTIONS = [
-    'моя хата с краю',
+    // 'моя хата с краю',
+    null,
     'век живи, век лечись',
     'квартирка огонек',
     'султаны и падишахи онли',
